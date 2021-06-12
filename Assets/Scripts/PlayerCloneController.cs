@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerCloneController : MonoBehaviour
@@ -15,6 +14,7 @@ public class PlayerCloneController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 velocity = playerRigidbody.velocity;
+        if(Mathf.Approximately(velocity.y, 0)) velocity.y=cloneRigidbody.velocity.y;
         cloneRigidbody.velocity = new Vector2(velocity.x*-1,velocity.y);
     }
 }

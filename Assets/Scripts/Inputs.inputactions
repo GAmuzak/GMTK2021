@@ -30,6 +30,14 @@
                     "interactions": "Press"
                 },
                 {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "39a01c24-fee6-4e8e-bd71-b99efe852f4a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
                     "name": "Quit",
                     "type": "Button",
                     "id": "3e6260db-f98b-4561-a8a4-73713ee37f76",
@@ -95,13 +103,46 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "6be38b9a-3ed8-4490-9e8a-ec6933c86e72",
-                    "path": "<Keyboard>/e",
+                    "name": "CloneSide",
+                    "id": "3eedddca-f496-4fbc-bbfb-e2d1e1f33f6c",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Split",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "c41d013a-5995-44ba-b007-876fd4c55d96",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Split",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "49b5faf3-5524-4b19-98bc-d89d5013daf8",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Split",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "18374a8f-7b63-458e-8460-133c41f738ff",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

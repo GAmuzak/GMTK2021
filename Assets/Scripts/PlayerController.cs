@@ -1,29 +1,40 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
+
     [Header("Player Movement")]
     [SerializeField] private float playerSpeed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float counterForce;
+
 
     [Header("Jump Settings")] 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float checkRadius=0f;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private int extraJumps=1;
-    
+
+
     [Header("Clone Settings")]
     [SerializeField] private GameObject clone;
-    [SerializeField] private float rejoinDistance;
+    [SerializeField] private float cloneDistance;
 
     private float direction=0f;
     private bool isGrounded = false;
     private Rigidbody2D rb;
     private bool canExtraJump=true;
+    private Vector2 counterMovement;
 
+    #endregion
+
+    #region UnityFunctions
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,15 +46,20 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
+    #endregion
+
     #region PlayerMovement
 
     private void Move()
     {
-        Vector2 velocity = rb.velocity;
-        velocity = new Vector2(velocity.x + (direction * playerSpeed), velocity.y);
-        velocity.x = Mathf.Clamp(velocity.x, -maxSpeed, maxSpeed);
-        rb.velocity = velocity;
-        
+        Vector2 moveForce = Vector2.right * (direction * playerSpeed);
+        rb.AddForce(moveForce);
+        float xVel = rb.velocity.x;
+        xVel = Mathf.Clamp(xVel, -maxSpeed, maxSpeed);
+        rb.velocity=new Vector2(xVel, rb.velocity.y);
+        counterMovement = new Vector2(-rb.velocity.x, 0f);
+        if (direction != 0f || Mathf.Approximately(rb.velocity.x,0)||rb.velocity.x*direction>0) return;
+        rb.AddForce(counterMovement*counterForce);
     }
     private void Jump()
     {
@@ -64,18 +80,18 @@ public class PlayerController : MonoBehaviour
 
     #region Splitting
     
-    private void Split()
+    private void Split(float cloneDirection)
     {
         if (clone.activeSelf == false)
         {
             clone.SetActive(true);
             Vector3 position = transform.position;
-            clone.transform.position = new Vector3(position.x - 5f, position.y);
+            clone.transform.position = new Vector3(position.x + cloneDistance*cloneDirection, position.y+1f);
             canExtraJump = false;
         }
         else
         {
-            if (!(Vector2.Distance(clone.transform.position, transform.position) < rejoinDistance)) return;
+            if (!(Vector2.Distance(clone.transform.position, transform.position) < cloneDistance*1.5f)) return;
             clone.SetActive(false);
             canExtraJump = true;
         }
@@ -108,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
     public void SplitInput(InputAction.CallbackContext context)
     {
-        if(context.performed) Split();
+        if(context.performed) Split(context.ReadValue<float>());
     }
 
     public void EscapeInput(InputAction.CallbackContext context)
@@ -116,14 +132,20 @@ public class PlayerController : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    #endregion
+    public void ReloadScene(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
 
+    #endregion
+    
     #region Gizmos
 
     void OnDrawGizmosSelected()
     {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = new Color(1f, 0.46f, 0f);
+        Gizmos.color = new Color(0.12f, 0.16f, 1f);
         Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
     }
 
