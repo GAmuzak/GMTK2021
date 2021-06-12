@@ -8,13 +8,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerSpeed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpForce;
+
+    [Header("Jump Settings")] 
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float checkRadius=0f;
+    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private int extraJumps=1;
     
     [Header("Clone Settings")]
     [SerializeField] private GameObject clone;
     [SerializeField] private float rejoinDistance;
 
     private float direction=0f;
+    private bool isGrounded = false;
     private Rigidbody2D rb;
+    private bool canExtraJump=true;
 
     private void Start()
     {
@@ -23,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckGrounded();
         Move();
     }
 
@@ -38,7 +47,17 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
-        rb.AddForce(Vector2.up*jumpForce, ForceMode2D.Impulse);
+        if (!canExtraJump)
+        {
+            if (!isGrounded) return;
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+        else
+        {
+            if (!isGrounded && extraJumps <= 0) return;
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            extraJumps--;
+        }
     }
 
     #endregion
@@ -52,11 +71,25 @@ public class PlayerController : MonoBehaviour
             clone.SetActive(true);
             Vector3 position = transform.position;
             clone.transform.position = new Vector3(position.x - 5f, position.y);
+            canExtraJump = false;
         }
         else
         {
-            if (Vector2.Distance(clone.transform.position, transform.position)<rejoinDistance) clone.SetActive(false);
+            if (!(Vector2.Distance(clone.transform.position, transform.position) < rejoinDistance)) return;
+            clone.SetActive(false);
+            canExtraJump = true;
         }
+    }
+
+    #endregion
+
+    #region Collision Detection
+
+    private void CheckGrounded()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        if (!isGrounded) return;
+        extraJumps = 1;
     }
 
     #endregion
@@ -81,6 +114,17 @@ public class PlayerController : MonoBehaviour
     public void EscapeInput(InputAction.CallbackContext context)
     {
         throw new NotImplementedException();
+    }
+
+    #endregion
+
+    #region Gizmos
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = new Color(1f, 0.46f, 0f);
+        Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
     }
 
     #endregion
