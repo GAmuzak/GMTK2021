@@ -8,7 +8,6 @@ public class WallButtonController : MonoBehaviour
     {
         bridgeController.wallButtonCount++;
         bridgeController.CheckButtonCount();
-        Debug.Log("pressed");
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -21,6 +20,5 @@ public class WallButtonController : MonoBehaviour
         LeanTween.moveLocalY(gameObject, 0f, 0.3f).setEase(LeanTweenType.easeOutQuad);
         bridgeController.wallButtonCount--;
         bridgeController.CheckButtonCount();
-        Debug.Log("Released");
     }
 }

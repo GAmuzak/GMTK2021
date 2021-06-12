@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BridgeController : MonoBehaviour
@@ -8,9 +9,10 @@ public class BridgeController : MonoBehaviour
     [SerializeField] private float finalLength;
 
     private bool bridgeOpen=false;
+    private bool canControl = true;
     public void CheckButtonCount()
     {
-        if (wallButtonCount != numberPressed) return;
+        if (wallButtonCount != numberPressed || !canControl) return;
         Debug.Log(wallButtonCount);
         if (bridgeOpen == false)
         {
@@ -22,6 +24,13 @@ public class BridgeController : MonoBehaviour
             LeanTween.scaleY(gameObject, 1f, 0.2f).setEase(LeanTweenType.easeOutQuad);
             bridgeOpen = false;
         }
+        canControl = false;
+        StartCoroutine(Cooldown());
+    }
 
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(1.5f);
+        canControl = true;
     }
 }

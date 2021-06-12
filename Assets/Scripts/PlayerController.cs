@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         xVel = Mathf.Clamp(xVel, -maxSpeed, maxSpeed);
         rb.velocity=new Vector2(xVel, rb.velocity.y);
         counterMovement = new Vector2(-rb.velocity.x, 0f);
-        if (direction != 0f || Mathf.Approximately(rb.velocity.x,0)||rb.velocity.x*direction>0) return;
+        if (!Mathf.Approximately(direction,0f) || Mathf.Approximately(rb.velocity.x,0)||rb.velocity.x*direction>0) return;
         rb.AddForce(counterMovement*counterForce);
     }
     private void Jump()
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             clone.SetActive(true);
             Vector3 position = transform.position;
-            clone.transform.position = new Vector3(position.x + cloneDistance*cloneDirection, position.y+1f);
+            clone.transform.position = new Vector3(position.x + cloneDistance*cloneDirection, position.y);
             canExtraJump = false;
         }
         else
