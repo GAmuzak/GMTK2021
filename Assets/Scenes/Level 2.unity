@@ -664,10 +664,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2354951627360136516, guid: 75a7fc218a5151a4cb489cc1803546ce, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354951627360136516, guid: 75a7fc218a5151a4cb489cc1803546ce, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2354951627360136518, guid: 75a7fc218a5151a4cb489cc1803546ce, type: 3}
       propertyPath: clone
       value: 
       objectReference: {fileID: 956007864}
+    - target: {fileID: 2354951627360136518, guid: 75a7fc218a5151a4cb489cc1803546ce, type: 3}
+      propertyPath: checkRadius
+      value: 0.71
+      objectReference: {fileID: 0}
     - target: {fileID: 2354951627360136536, guid: 75a7fc218a5151a4cb489cc1803546ce, type: 3}
       propertyPath: m_RootOrder
       value: 5

@@ -957,11 +957,14 @@ PrefabInstance:
 
         Left Click to Create Clone on left side
 
-        Press
-        both Buttons to open Green Door
+        Get
+        close to disable clone with left or right click
 
-        Be in original state (clone inactive)
-        and touch hexagon to go to next level'
+        Press both Buttons
+        to open Green Door
+
+        Be in original state (clone inactive) and touch
+        hexagon to go to next level'
       objectReference: {fileID: 0}
     - target: {fileID: 8732427082630043582, guid: eb082209037a587439677573efc58237, type: 3}
       propertyPath: m_fontSize

@@ -28,7 +28,7 @@ public class BridgeController : MonoBehaviour
         StartCoroutine(Cooldown());
     }
 
-    IEnumerator Cooldown()
+    private IEnumerator Cooldown()
     {
         yield return new WaitForSeconds(1.5f);
         canControl = true;
