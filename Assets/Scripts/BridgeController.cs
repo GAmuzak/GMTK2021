@@ -8,12 +8,17 @@ public class BridgeController : MonoBehaviour
     [SerializeField] private int numberPressed=0;
     [SerializeField] private float finalLength;
 
-    private bool bridgeOpen=false;
+    [SerializeField] private bool bridgeOpen = false;
     private bool canControl = true;
+
     public void CheckButtonCount()
     {
+        Invoke(nameof(_CheckButtonCount),0.1f);
+    }
+    private void _CheckButtonCount()
+    {
+        
         if (wallButtonCount != numberPressed || !canControl) return;
-        Debug.Log(wallButtonCount);
         if (bridgeOpen == false)
         {
             LeanTween.scaleY(gameObject, finalLength, 0.2f).setEase(LeanTweenType.easeOutQuad);
@@ -30,7 +35,7 @@ public class BridgeController : MonoBehaviour
 
     private IEnumerator Cooldown()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         canControl = true;
     }
 }

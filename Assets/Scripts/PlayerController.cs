@@ -1,5 +1,7 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -7,8 +9,18 @@ public class PlayerController : MonoBehaviour
 {
     #region Variables
 
+    public static UnityAction MoveSfx;
+    public static UnityAction JumpSfx;
+
+    [SerializeField] private Animator anim;
+    [SerializeField] private GameObject sprite;
+
+    [SerializeField] private GameObject settings;
+
+
     [Header("Player Movement")]
     [SerializeField] private float playerSpeed;
+
     [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float counterForce;
@@ -16,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump Settings")] 
     [SerializeField] private Transform groundCheck;
+
     [SerializeField] private float checkRadius=0f;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private int extraJumps=1;
@@ -23,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Clone Settings")]
     [SerializeField] private GameObject clone;
+
     [SerializeField] private float cloneDistance;
 
     private float direction=0f;
@@ -30,6 +44,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private bool canExtraJump=true;
     private Vector2 counterMovement;
+    private bool isWalking = false;
+    private Vector3 spriteX;
 
     #endregion
 
@@ -38,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteX=sprite.transform.localScale;
     }
 
     private void FixedUpdate()
@@ -57,6 +74,24 @@ public class PlayerController : MonoBehaviour
         float xVel = rb.velocity.x;
         xVel = Mathf.Clamp(xVel, -maxSpeed, maxSpeed);
         rb.velocity=new Vector2(xVel, rb.velocity.y);
+        MoveSfx?.Invoke();
+        anim.SetBool("isWalking", isWalking);
+        if (direction > 0)
+        {
+            spriteX.x = 2.5f;
+            sprite.transform.localScale = spriteX;
+        }
+        else if (direction < 0)
+        {
+            spriteX.x = -2.5f;
+            sprite.transform.localScale = spriteX;
+        }
+
+        isWalking = !Mathf.Approximately(direction, 0f);
+
+        anim.SetFloat("yVel", rb.velocity.y);
+        // ReSharper disable once Unity.InefficientPropertyAccess
+
         counterMovement = new Vector2(-rb.velocity.x, 0f);
         if (!Mathf.Approximately(direction,0f) || Mathf.Approximately(rb.velocity.x,0)||rb.velocity.x*direction>0) return;
         rb.AddForce(counterMovement*counterForce);
@@ -67,12 +102,14 @@ public class PlayerController : MonoBehaviour
         {
             if (!isGrounded) return;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            JumpSfx?.Invoke();
         }
         else
         {
             if (!isGrounded && extraJumps <= 0) return;
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             extraJumps--;
+            JumpSfx?.Invoke();
         }
     }
 
@@ -104,6 +141,7 @@ public class PlayerController : MonoBehaviour
     private void CheckGrounded()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        anim.SetBool("grounded", isGrounded);
         if (!isGrounded) return;
         extraJumps = 1;
     }
@@ -129,7 +167,8 @@ public class PlayerController : MonoBehaviour
 
     public void EscapeInput(InputAction.CallbackContext context)
     {
-        throw new NotImplementedException();
+        settings.SetActive(!settings.activeSelf);
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 1f) ? 0f : 1f;
     }
 
     public void ReloadScene(InputAction.CallbackContext context)

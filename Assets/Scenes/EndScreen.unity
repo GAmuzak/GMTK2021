@@ -206,6 +206,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &283792238
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6262769883296163223, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_Name
+      value: Background
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656671897592065053, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0e25cd67cc2346847bb6451d1fdb756e, type: 3}
 --- !u!1 &702490667
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 092138f65ea6f07499d4f5b94615ee93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
 --- !u!1001 &1222428550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -423,6 +479,22 @@ PrefabInstance:
     - target: {fileID: 648840933486207923, guid: 8c66597d1f2612c438fe47ae3858c3da, type: 3}
       propertyPath: m_Name
       value: Quit
+      objectReference: {fileID: 0}
+    - target: {fileID: 648840934494300741, guid: 8c66597d1f2612c438fe47ae3858c3da, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 648840934494300741, guid: 8c66597d1f2612c438fe47ae3858c3da, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 648840934494300741, guid: 8c66597d1f2612c438fe47ae3858c3da, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 648840934494300741, guid: 8c66597d1f2612c438fe47ae3858c3da, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c66597d1f2612c438fe47ae3858c3da, type: 3}
@@ -554,7 +626,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Thank you for play(test)ing!
+  m_text: Thank you for playing!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
